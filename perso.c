@@ -161,7 +161,7 @@ void aff_vision(int mat[DTAILLE][DTAILLE],int xp,int yp){
       break;
       }
 
-      printf("%d ",mat[x][y]);
+      printf("0.");
       printf("\x1B[38;2;%d;%d;%dm",0,0,0);
     }
     printf("\n");
