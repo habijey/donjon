@@ -11,19 +11,19 @@
 //fonction pour initialisé touts les aspect du perso
 Perso initialisation_perso(){
     Perso a;
-    a.inventaire.epee_en_bois = 1;
+    a.inventaire.epee_en_bois = 0;
     a.inventaire.dague = 0;
     a.inventaire.epee_en_fer = 0;
-    a.inventaire.armure_fer = 1;
+    a.inventaire.armure_fer = 0;
     a.inventaire.armure_cuire = 0;
     a.inventaire.demi_armure_fer = 0;
     a.inventaire.demi_armure_cuire = 0;
-    a.inventaire.pomme =2;
-    a.inventaire.clee = 1;
-    a.inventaire.torche = 64;
-    a.inventaire.potion = 1;
-    a.inventaire.fiole_de_xp = 20;
-    a.inventaire.roche = 80;
+    a.inventaire.pomme =0;
+    a.inventaire.clee = 0;
+    a.inventaire.torche = 0;
+    a.inventaire.potion = 0;
+    a.inventaire.fiole_de_xp = 0;
+    a.inventaire.roche = 00;
     a.case_joueur = 7;
     a.num_salle = 0;
     a.num_porte = 0;
@@ -274,7 +274,7 @@ void affichage_inventaire(Perso* pperso){
     }
 }
 
-void affichage(Perso* pperso,int matrice[DTAILLE][DTAILLE]){
+void affichage(Perso* pperso,int matrice[DTAILLE][DTAILLE],int fin){
     system("clear");
     printf(" ______________________________________________________________\n");
     printf("| A -> Accueil   Z -> Devant    E -> Interagir  R -> Utiliser |\n");
@@ -282,27 +282,19 @@ void affichage(Perso* pperso,int matrice[DTAILLE][DTAILLE]){
     printf("| Q -> Gauche    S -> Derrière D -> Droite     F -> Attaquer |\n");
     printf(" ______________________________________________________________\n");
 
+    int timer;
+    int maintenant = clock() / CLOCKS_PER_SEC;
+    timer = fin - maintenant ;
+    printf("CHRONO |%d|\n", timer);
 
-    /*int timer = 0;
-    int cpt = 0;
-    while (timer <= 1000) {
-        if ((int)(clock() / CLOCKS_PER_SEC) > timer){
-            system("clear");
-            printf("CHRONO |%d|\n", -(timer-1000));
-            ++timer;
-            cpt += 1;
-
-*/
-            aff_matrice(matrice);
-            // aff_vision(matrice,(*pperso).xy.x,(*pperso).xy.y);
-            affichage_inventaire(pperso);
-            printf("PV = %d\n",(*pperso).PV);
-            printf("xp = %d\n",(*pperso).xp);
-            printf("objet en main : %s \n",(*pperso).objet_en_main);
-            printf("point d'attaque : %d \n",(*pperso).attaque);
-            printf("NUM salle : %d \n",(*pperso).num_salle);
-  /*      }
-    }*/
+    aff_matrice(matrice);
+    // aff_vision(matrice,(*pperso).xy.x,(*pperso).xy.y);
+    affichage_inventaire(pperso);
+    printf("PV = %d\n",(*pperso).PV);
+    printf("xp = %d\n",(*pperso).xp);
+    printf("objet en main : %s \n",(*pperso).objet_en_main);
+    printf("point d'attaque : %d \n",(*pperso).attaque);
+    printf("NUM salle : %d \n",(*pperso).num_salle);
 }
 
 Position_Autour pautour(Perso a){
@@ -338,7 +330,7 @@ void creation_tombe(Perso* pperso,Perso* ptombe,int matrice[DTAILLE][DTAILLE]){
     matrice[(*pperso).xy.x+CST][(*pperso).xy.y+CST] = 1;
 }
 
-void prise_objet_main(Perso* pperso,short b,int matrice[DTAILLE][DTAILLE]){
+void prise_objet_main(Perso* pperso,short b,int matrice[DTAILLE][DTAILLE],int fin){
     switch(b){
         case 6:
             if((*pperso).inventaire.epee_en_bois >0){
@@ -471,56 +463,56 @@ void prise_objet_main(Perso* pperso,short b,int matrice[DTAILLE][DTAILLE]){
             }
         break;
     }
-    affichage(pperso,matrice);
+     affichage(pperso,matrice,fin);
 }
 
-void utilisation(Perso* pperso,int matrice[DTAILLE][DTAILLE]){
+void utilisation(Perso* pperso,int matrice[DTAILLE][DTAILLE],int fin){
     if(strcmp((*pperso).objet_en_main,"armure cuire")==0){
         (*pperso).defense = 10;
         (*pperso).inventaire.armure_cuire =(*pperso).inventaire.armure_cuire -1;
-        prise_objet_main(pperso,9,matrice);
-        affichage(pperso,matrice);
+        prise_objet_main(pperso,9,matrice,fin);
+        affichage(pperso,matrice,fin);
     }
     else if(strcmp((*pperso).objet_en_main,"armure fer")==0){
         (*pperso).defense = 15;
         (*pperso).inventaire.armure_fer =(*pperso).inventaire.armure_fer -1;
-        prise_objet_main(pperso,10,matrice);
-        affichage(pperso,matrice);
+        prise_objet_main(pperso,10,matrice,fin);
+         affichage(pperso,matrice,fin);
     }
     else if(strcmp((*pperso).objet_en_main,"demi armure cuire")==0){
         (*pperso).defense = 5;
         (*pperso).inventaire.demi_armure_cuire =(*pperso).inventaire.demi_armure_cuire -1;
-        prise_objet_main(pperso,11,matrice);
-        affichage(pperso,matrice);
+        prise_objet_main(pperso,11,matrice,fin);
+         affichage(pperso,matrice,fin);
     }
     else if(strcmp((*pperso).objet_en_main,"demi armure fer")==0){
         (*pperso).defense = 10;
         (*pperso).inventaire.demi_armure_fer =(*pperso).inventaire.demi_armure_fer -1;
-        prise_objet_main(pperso,12,matrice);
-        affichage(pperso,matrice);
+        prise_objet_main(pperso,12,matrice,fin);
+         affichage(pperso,matrice,fin);
     }
     else if(strcmp((*pperso).objet_en_main,"pomme")==0){
          (*pperso).PV = (*pperso).PV +5;
         (*pperso).inventaire.pomme =(*pperso).inventaire.pomme -1;
-        prise_objet_main(pperso,13,matrice);
-        affichage(pperso,matrice);
+        prise_objet_main(pperso,13,matrice,fin);
+         affichage(pperso,matrice,fin);
     }
     else if(strcmp((*pperso).objet_en_main,"torche")==0){
         (*pperso).PV = (*pperso).PV -1;
         (*pperso).inventaire.torche = (*pperso).inventaire.torche -1;
         (*pperso).inventaire.epee_en_bois = 0;
-        prise_objet_main(pperso,6,matrice);
-        affichage(pperso,matrice);
+        prise_objet_main(pperso,6,matrice,fin);
+         affichage(pperso,matrice,fin);
         printf("Vous tentez de devenir saltimbanque, mais vous brûlez tous vos équipements en bois !!!\n");
     }
     else if(strcmp((*pperso).objet_en_main,"fiole de xp")==0){
          (*pperso).xp = (*pperso).xp +15;
         (*pperso).inventaire.fiole_de_xp =(*pperso).inventaire.fiole_de_xp -1;
-        prise_objet_main(pperso,17,matrice);
-        affichage(pperso,matrice);
+        prise_objet_main(pperso,17,matrice,fin);
+         affichage(pperso,matrice,fin);
     }
     else if(strcmp((*pperso).objet_en_main,"caillou")==0){
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Vous regardez cette belle pierre faire de la lumière !!!\n");
         printf("Elle vous appelle et vous dit : « Les maths, quelle est l'utilité ? L'info suffit. »\n");
     }
@@ -546,28 +538,28 @@ void ouverture_tombe(Perso* pperso,Perso* ptombe){
     tombe_vide(ptombe);
 }
 
-void verification_objet_statique(Perso* pperso,Perso* ptombe,int matrice[DTAILLE][DTAILLE],Position_Autour alpha){
+void verification_objet_statique(Perso* pperso,Perso* ptombe,int matrice[DTAILLE][DTAILLE],Position_Autour alpha, int fin){
     if(matrice[alpha.haut.x+CST][alpha.haut.y+CST] == 4){
         matrice[alpha.haut.x+CST][alpha.haut.y+CST] = 41;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         ouverture_coffre(pperso);
         (*pperso).xp = (*pperso).xp + rand()%20;
     }
     else if(matrice[alpha.bas.x+CST][alpha.bas.y+CST] == 4){
         matrice[alpha.bas.x+CST][alpha.bas.y+CST] = 41;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         ouverture_coffre(pperso);
         (*pperso).xp = (*pperso).xp + rand()%20;
     }
     else if(matrice[alpha.gauche.x+CST][alpha.gauche.y+CST] == 4){
         matrice[alpha.gauche.x+CST][alpha.gauche.y+CST] = 41;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         ouverture_coffre(pperso);
         (*pperso).xp = (*pperso).xp + rand()%20;
     }
     else if(matrice[alpha.droite.x+CST][alpha.droite.y+CST] == 4){
         matrice[alpha.droite.x+CST][alpha.droite.y+CST] = 41;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         ouverture_coffre(pperso);
         (*pperso).xp = (*pperso).xp + rand()%20;
     }
@@ -593,11 +585,11 @@ void verification_objet_statique(Perso* pperso,Perso* ptombe,int matrice[DTAILLE
             (*pperso).nb_caillou_depose ++;
             (*pperso).inventaire.roche --;
             if((*pperso).nb_caillou_depose !=4){
-                affichage(pperso,matrice);
+                 affichage(pperso,matrice,fin);
                 printf("Bravo. vous avancez petit à petit vers la fin !!!!\n");
             }
             else{
-                affichage(pperso,matrice);
+                 affichage(pperso,matrice,fin);
                 printf("BRAVO VOUS AVEZ TERMINÉ. WHAOU\n");
             }
         }
@@ -611,11 +603,11 @@ void verification_objet_statique(Perso* pperso,Perso* ptombe,int matrice[DTAILLE
             (*pperso).nb_caillou_depose ++;
             (*pperso).inventaire.roche --;
             if((*pperso).nb_caillou_depose !=4){
-                affichage(pperso,matrice);
+                 affichage(pperso,matrice,fin);
                 printf("bravo. vous avancez petit à petit vers la fin!!!!\n");
             }
             else{
-                affichage(pperso,matrice);
+                 affichage(pperso,matrice,fin);
                 printf("BRAVO VOUS AVEZ TERMINÉ. WHAOU\n");
             }
         }
@@ -629,11 +621,11 @@ void verification_objet_statique(Perso* pperso,Perso* ptombe,int matrice[DTAILLE
             (*pperso).nb_caillou_depose ++;
             (*pperso).inventaire.roche --;
             if((*pperso).nb_caillou_depose !=4){
-                affichage(pperso,matrice);
+                 affichage(pperso,matrice,fin);
                 printf("Bravo. vous avancez petit à petit vers la fin !!!!\n");
             }
             else{
-                affichage(pperso,matrice);
+                 affichage(pperso,matrice,fin);
                 printf("BRAVO VOUS AVEZ TERMINÉ. WHAOU\n");
             }
         }
@@ -647,11 +639,11 @@ void verification_objet_statique(Perso* pperso,Perso* ptombe,int matrice[DTAILLE
             (*pperso).nb_caillou_depose ++;
             (*pperso).inventaire.roche --;
             if((*pperso).nb_caillou_depose !=4){
-                affichage(pperso,matrice);
+                 affichage(pperso,matrice,fin);
                 printf("bravo. vous avancez petit à petit vers la fin !!!!\n");
             }
             else{
-                affichage(pperso,matrice);
+                 affichage(pperso,matrice,fin);
                 printf("BRAVO VOUS AVEZ TERMINÉ. WHAOU\n");
             }
         }
@@ -662,79 +654,79 @@ void verification_objet_statique(Perso* pperso,Perso* ptombe,int matrice[DTAILLE
     else if((*pperso).case_joueur == 100){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.roche =(*pperso).inventaire.roche +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Vous trouvez un mystérieux caillou posé là et vous le ramassez\n");
     }
     else if((*pperso).case_joueur == 101){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.epee_en_bois =(*pperso).inventaire.epee_en_bois +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Vous trouvez un bout de bois par terre et vous vous dites que c'est toujours mieux que rien vous en faites une epée en bois.\n");
     }
     else if((*pperso).case_joueur == 102){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.dague =(*pperso).inventaire.dague +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Vous trouvez une petite épée par terre et vous vous dites que c'est toujours bien.\n");
     }
     else if((*pperso).case_joueur == 103){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.epee_en_fer =(*pperso).inventaire.epee_en_fer +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Vous trouvez une petite épée en fer. Votre esprit chevaleresque prend le dessus et vous la sortez de son fourreaux avant de l'attacher à votre ceinture.\n");
     }
     else if((*pperso).case_joueur == 104){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.demi_armure_cuire =(*pperso).inventaire.demi_armure_cuire +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Vous trouvez un bout de cuire qui dépasse et la vous reconnaissez un bout d'armure ce seras toujours mieux que rien.\n");
     }
     else if((*pperso).case_joueur == 105){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.demi_armure_fer =(*pperso).inventaire.demi_armure_fer +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Un bout de métal qui traine par terre il vous servira de protection car cela ressemble à une armure.\n");
     }
     else if((*pperso).case_joueur == 106){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.armure_cuire =(*pperso).inventaire.armure_cuire +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Une armure en cuire un gueux a dû la laisser tomber vous la ramassez.\n");
     }
     else if((*pperso).case_joueur == 107){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.armure_fer =(*pperso).inventaire.armure_fer +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("une armure en fer, posé là? sans doute un piege mais vous la prenais car ça reste une bonne armure.\n");
     }
     else if((*pperso).case_joueur == 108){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.pomme =(*pperso).inventaire.pomme +3;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("MIAM. miam. miam. miam. une pomme!!!!!! ce n'est pas une tarte au pomme ,mais ça fera l'affaire.\n");
     }
     else if((*pperso).case_joueur == 109){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.clee =(*pperso).inventaire.clee +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Un objet brilliant attire votre regard. Ce n'est qu'une simple clée. Passe-Partout a dû passer par là lui aussi.\n");
     }
     else if((*pperso).case_joueur == 110){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.torche =(*pperso).inventaire.torche +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Ma mère est une meurtrière en série, mon père un psycopathe, la pomme ne tombe pas loin du pommier. CETTE TORCHE M'INTÉRESSE.\n");
     }
     else if((*pperso).case_joueur == 111){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.potion =(*pperso).inventaire.potion +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Un flacon bizzare vous tend les bras au sol. Il a l'air louche. C'est trop bien et vous le prenez.\n");
     }
     else if((*pperso).case_joueur == 112){
         (*pperso).case_joueur = 7;
         (*pperso).inventaire.fiole_de_xp =(*pperso).inventaire.fiole_de_xp +1;
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Vous êtes un imbéciles finis. cette expèrience vous aidera peut-être à compter jusqu'à 2.\n");
     }
     else if(matrice[alpha.droite.x+CST][alpha.droite.y+CST] == 666){
@@ -754,7 +746,7 @@ void verification_objet_statique(Perso* pperso,Perso* ptombe,int matrice[DTAILLE
         printf("vous intéragissez avec jésus\n");
     }
     else{
-        affichage(pperso,matrice);
+         affichage(pperso,matrice,fin);
         printf("Vous ramassez de l'air. BRAVO !!! vous ne pensez pas que vous avez mieux à faire ?\n");
     }
 }
@@ -793,7 +785,7 @@ int mort_monstre(int matrice[DTAILLE][DTAILLE],Salle* donj,Perso* pperso,int i){
 
 }
 
-void attaque(Perso* pperso,int matrice[DTAILLE][DTAILLE],Position_Autour alpha,Salle* donj){
+void attaque(Perso* pperso,int matrice[DTAILLE][DTAILLE],Position_Autour alpha,Salle* donj, int fin){
 
     if(matrice[alpha.bas.x+CST][alpha.bas.y+CST] == 9){
         for(int i=0;i<donj[(*pperso).num_salle].nbm;i++){
@@ -938,10 +930,10 @@ void attaque(Perso* pperso,int matrice[DTAILLE][DTAILLE],Position_Autour alpha,S
     else{
         printf("brasser de l'air ne vous aideras pas a avancer plus vite !! \n");
     }
-    affichage(pperso,matrice);
+     affichage(pperso,matrice,fin);
 }
 
-int mouvementperso(int m,Perso* pperso,int matrice[DTAILLE][DTAILLE],Salle* donj,int* nbS,int nbSmax,int* nbspotentielle,int* nbcaillou,int nbstot,int* bobby_la){
+int mouvementperso(int m,Perso* pperso,int matrice[DTAILLE][DTAILLE],Salle* donj,int* nbS,int nbSmax,int* nbspotentielle,int* nbcaillou,int nbstot,int* bobby_la, int fin){
     Perso perso=*pperso;
     (*pperso).bobby.ancienne_pj.x = (*pperso).xy.x;
     (*pperso).bobby.ancienne_pj.y = (*pperso).xy.y;
@@ -1459,7 +1451,7 @@ int mouvementperso(int m,Perso* pperso,int matrice[DTAILLE][DTAILLE],Salle* donj
     if((*pperso).bobby.action ==1){
         deplacement_bobby(pperso,matrice);
     }
-    affichage(pperso,matrice);
+     affichage(pperso,matrice,fin);
     return m;
 }
 
@@ -1534,7 +1526,7 @@ short queltouche(char a[256],int matrice[DTAILLE][DTAILLE]){
 }
 
 //fonction pour réalisé les action.
-void actionafaire(short b, Perso* pperso,Perso*ptombe,int matrice[DTAILLE][DTAILLE],Salle* donj,int* nbS,int nbSmax,int* nbspotentielle,int* nbcaillou,int nbstot,int* bobby_la){
+void actionafaire(short b, Perso* pperso,Perso*ptombe,int matrice[DTAILLE][DTAILLE],Salle* donj,int* nbS,int nbSmax,int* nbspotentielle,int* nbcaillou,int nbstot,int* bobby_la,int fin){
     Perso coffre = remplisagecoffre();
     if(b<0 || b>21){
         exit(1);
@@ -1546,70 +1538,70 @@ void actionafaire(short b, Perso* pperso,Perso*ptombe,int matrice[DTAILLE][DTAIL
     switch(b){
         case 0:
             m=1;
-            m=mouvementperso(m,pperso,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la);
+            m=mouvementperso(m,pperso,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la,fin);
         break;
         case 1:
             m=2;
-            m=mouvementperso(m,pperso,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la);
+            m=mouvementperso(m,pperso,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la,fin);
         break;
         case 2:
             m=3;
-            m=mouvementperso(m,pperso,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la);
+            m=mouvementperso(m,pperso,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la,fin);
         break;
         case 3:
             m=4;
-            m=mouvementperso(m,pperso,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la);
+            m=mouvementperso(m,pperso,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la,fin);
         break;
         case 4:
-            verification_objet_statique(pperso,ptombe,matrice,alpha);
+            verification_objet_statique(pperso,ptombe,matrice,alpha,fin);
         break;
         case 5:
             printf("le jeu est arrété.\n");
         break;
         case 6:
-            prise_objet_main(pperso,6,matrice);
+            prise_objet_main(pperso,6,matrice,fin);
         break;
         case 7:
-            prise_objet_main(pperso,7,matrice);
+            prise_objet_main(pperso,7,matrice,fin);
         break;
         case 8:
-            prise_objet_main(pperso,8,matrice);
+            prise_objet_main(pperso,8,matrice,fin);
         break;
         case 9:
-            prise_objet_main(pperso,9,matrice);
+            prise_objet_main(pperso,9,matrice,fin);
         break;
         case 10:
-            prise_objet_main(pperso,10,matrice);
+            prise_objet_main(pperso,10,matrice,fin);
         break;
         case 11:
-            prise_objet_main(pperso,11,matrice);
+            prise_objet_main(pperso,11,matrice,fin);
         break;
         case 12:
-            prise_objet_main(pperso,12,matrice);
+            prise_objet_main(pperso,12,matrice,fin);
         break;
         case 13:
-            prise_objet_main(pperso,13,matrice);
+            prise_objet_main(pperso,13,matrice,fin);
         break;
         case 14:
-            prise_objet_main(pperso,14,matrice);
+            prise_objet_main(pperso,14,matrice,fin);
         break;
         case 15:
-            prise_objet_main(pperso,15,matrice);
+            prise_objet_main(pperso,15,matrice,fin);
         break;
         case 16:
-            prise_objet_main(pperso,16,matrice);
+            prise_objet_main(pperso,16,matrice,fin);
         break;
         case 17:
-            prise_objet_main(pperso,17,matrice);
+            prise_objet_main(pperso,17,matrice,fin);
         break;
         case 18:
-            prise_objet_main(pperso,18,matrice);
+            prise_objet_main(pperso,18,matrice,fin);
         break;
         case 19:
-            utilisation(pperso,matrice);
+            utilisation(pperso,matrice,fin);
         break;
         case 20:
-            attaque(pperso,matrice,alpha,donj);
+            attaque(pperso,matrice,alpha,donj,fin);
         break;
     }
     if(m==5){
@@ -1630,8 +1622,8 @@ void enchainement(Perso* pperso,int matrice[DTAILLE][DTAILLE],Salle* donj,int* n
     char a[256];
     short b;
     short c = 0;
-
-    affichage(pperso,matrice);
+    int fin = clock() +1000;
+     affichage(pperso,matrice,fin);
     do{
         do{
             c=0;
@@ -1644,22 +1636,19 @@ void enchainement(Perso* pperso,int matrice[DTAILLE][DTAILLE],Salle* donj,int* n
         }while(c != 1);
         b = queltouche(a,matrice);
         if(b<21 && b>=0){
-            actionafaire(b,pperso,ptombe,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la);
+            actionafaire(b,pperso,ptombe,matrice,donj,nbS,nbSmax,nbspotentielle,nbcaillou,nbstot,bobby_la,fin);
             deplacement_monstre_salle(matrice,&(donj[(*pperso).num_salle]),pperso);
-            printf("eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee%d \n \n",*nbS);
-            printf("dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd%d \n \n",nbstot);
-            printf("cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc%d \n \n",*nbspotentielle);
         }
         if((*pperso).PV <1){
             Perso perso=*pperso;
             creation_tombe(pperso,ptombe,matrice);
-            affichage(pperso,matrice);
+             affichage(pperso,matrice,fin);
         }
         if((*pperso).nb_caillou_depose ==4){
             b=5;
             printf("Bien joué votre partie est TERMINÉE votre score est de %d",(*pperso).xp *100);
         }
-    }while(b != 5);
+    }while(b != 5 );
 }
 
 int num_s_perso(Salle* donj,Perso* j,int nbs){
