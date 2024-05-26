@@ -287,8 +287,8 @@ void affichage(Perso* pperso,int matrice[DTAILLE][DTAILLE],int fin){
     timer = fin - maintenant ;
     printf("CHRONO |%d|\n", timer);
 
-    aff_matrice(matrice);
-    // aff_vision(matrice,(*pperso).xy.x,(*pperso).xy.y);
+    //aff_matrice(matrice);
+    aff_vision(matrice,(*pperso).xy.x,(*pperso).xy.y);
     affichage_inventaire(pperso);
     printf("PV = %d\n",(*pperso).PV);
     printf("xp = %d\n",(*pperso).xp);
