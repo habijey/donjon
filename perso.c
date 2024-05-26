@@ -285,7 +285,7 @@ void affichage(Perso* pperso,int matrice[DTAILLE][DTAILLE],int fin){
     int timer;
     int maintenant = clock() / CLOCKS_PER_SEC;
     timer = fin - maintenant ;
-    printf("CHRONO |%d|\n", timer);
+   // printf("CHRONO |%d|\n", timer);
 
     //aff_matrice(matrice);
     aff_vision(matrice,(*pperso).xy.x,(*pperso).xy.y);
