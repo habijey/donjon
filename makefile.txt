@@ -1,0 +1,27 @@
+#première cible : sera executée en premier
+all: exec clean
+
+main.o : main.c *.h
+	gcc -c main.c -o main.o
+
+perso.o : perso.c *.h
+	gcc -c perso.c -o perso.o
+
+salle.o : salle.c *.h
+	gcc -c salle.c -o salle.o
+
+bobby.o : bobby.c *.h
+	gcc -c bobby.c -o bobby.o
+
+sauvegarde.o : sauvegarde.c *.h
+	gcc -c sauvegarde.c -o sauvegarde.o
+
+monstre.o : monstre.c *.h
+	gcc -c monstre.c -o monstre.o
+
+exec : main.o perso.o salle.o bobby.o sauvegarde.o monstre.o
+	gcc *.o -o exec
+
+#supprime tous les fichiers objects
+clean :
+	rm -f *.o

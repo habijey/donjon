@@ -1,0 +1,10 @@
+void gen_elt_s(int mat[DTAILLE][DTAILLE],Salle* s,int* num_salle,int* nbcaillou,int nbstot, int* bobby_la,Perso* j);
+int verif_s(int mat[DTAILLE][DTAILLE],Salle s);
+int verif_p(int mat[DTAILLE][DTAILLE],Salle s,int num_p);
+Salle gen_p(int mat[DTAILLE][DTAILLE],Salle s,int nbS,int nbSmax,int* nbspotentielle);
+Salle creerS(Salle* donj,Salle sorigine,int num_p,int nbS,int nbSmax,int mat[DTAILLE][DTAILLE],int* nbspotentielle,int* nbcaillou,int nbstot);
+int ajts_matrice(int mat[DTAILLE][DTAILLE],Salle s);
+int det_nbs();
+Salle creer_s_valide(Salle* donj,Salle sorigine,int num_p,int* nbS,int nbSmax,int mat[DTAILLE][DTAILLE],int* nbspotentielle,int* nbcaillou,int nbstot,int* bobby_la,Perso* j);
+int num_p(int mat[DTAILLE][DTAILLE],Salle s,int x,int y);
+void creer_s_origine(Salle* donj,int mat[DTAILLE][DTAILLE],int* nbS,int* nbspotentielle);
